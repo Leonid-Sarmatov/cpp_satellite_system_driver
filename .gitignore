@@ -1,0 +1,6 @@
+
+.vscode/*
+AT32F435ZMT7_BUBUILDA/*
+AT32F435ZMT7_BUBUILDA/build/*
+satellite_device/build/*
+satellite_driver/build/*
