@@ -25,7 +25,7 @@ extern "C" {
   * @brief usb descriptor size define
   */
 #define USBD_CUSHID_CONFIG_DESC_SIZE     41
-#define USBD_CUSHID_SIZ_REPORT_DESC      126
+#define USBD_CUSHID_SIZ_REPORT_DESC      112
 #define USBD_CUSHID_SIZ_STRING_LANGID    4
 #define USBD_CUSHID_SIZ_STRING_SERIAL    0x1A
 
@@ -50,7 +50,7 @@ extern "C" {
 #define HID_REPORT_ID_3                   0x03
 #define HID_REPORT_ID_4                   0x04
 #define HID_REPORT_ID_5                   0x05
-#define HID_REPORT_ID_6                   0xF0
+#define HID_REPORT_ID_6                   0x06
 
 /**
   * @brief usb mcu id address deine

@@ -329,14 +329,22 @@ static void usb_hid_buf_process(void *udev, uint8_t *report, uint16_t len)
   switch(report[0])
   {
     case HID_REPORT_ID_2:
-      if(pcshid->g_rxhid_buff[1] == 0)
+      if(report[1] == 0)
       {
-        LED_SetEnableState(&aliveControlLed);
+        LED_SetDisableState(&controlLed);
       }
       else
       {
-        LED_SetDisableState(&aliveControlLed);
+        LED_SetEnableState(&controlLed);
       }
+
+      ALIGNED_HEAD static uint8_t report_buf[64] ALIGNED_TAIL;
+      memset(report_buf, 0, sizeof(report_buf));
+      report_buf[0] = HID_REPORT_ID_2;
+      const char *response = "bubilda";
+      memcpy(&report_buf[1], response, strlen(response));
+      custom_hid_class_send_report(pudev, report_buf, 64);
+
       break;
     case HID_REPORT_ID_3:
       if(pcshid->g_rxhid_buff[1] == 0)

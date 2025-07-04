@@ -3,7 +3,7 @@
 
 #include "led.h"
 
-extern led_t aliveControlLed = {0};
+extern led_t controlLed = {0};
 
 /**
   * @brief  initialization of satellite payload
@@ -12,5 +12,5 @@ extern led_t aliveControlLed = {0};
   */
 void satelliteEquipmentInit() {
   /* control led init */
-  LED_Init(&aliveControlLed, LED_GPIO_PORT, LED_PIN);
+  LED_Init(&controlLed, LED_GPIO_PORT, LED_PIN);
 }

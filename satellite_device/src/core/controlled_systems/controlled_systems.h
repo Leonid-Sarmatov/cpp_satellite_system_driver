@@ -12,7 +12,7 @@ extern "C" {
 /**
   * @brief LED for monitoring and prevention
   */
-extern led_t aliveControlLed;
+extern led_t controlLed;
 
 void satelliteEquipmentInit(void);
 

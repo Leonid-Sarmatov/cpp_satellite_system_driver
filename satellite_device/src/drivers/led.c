@@ -26,7 +26,7 @@ void LED_Init(led_t *led, gpio_type *gpio, uint16_t pin) {
 
     led->pin = pin;
     led->gpio = gpio;
-    led->state = false;
+    led->state = 0;
 }
 
 /**
@@ -34,8 +34,8 @@ void LED_Init(led_t *led, gpio_type *gpio, uint16_t pin) {
   * @param  led: Pointer to led_t structure.
   * @retval true if LED is enabled, false otherwise.
   */
-bool LED_IsEnableState(led_t *led) {
-    return led ? led->state : false;
+uint8_t LED_IsEnableState(led_t *led) {
+    return led->state;
 }
 
 /**
@@ -46,7 +46,7 @@ bool LED_IsEnableState(led_t *led) {
 void LED_SetEnableState(led_t *led) {
     if (!led) return;
     gpio_bits_reset(led->gpio, led->pin);
-    led->state = true;
+    led->state = 1;
 }
 
 /**
@@ -57,7 +57,7 @@ void LED_SetEnableState(led_t *led) {
 void LED_SetDisableState(led_t *led) {
     if (!led) return;
     gpio_bits_set(led->gpio, led->pin);
-    led->state = false;
+    led->state = 0;
 }
 
 /**
@@ -68,9 +68,8 @@ void LED_SetDisableState(led_t *led) {
 void LED_ReverseState(led_t *led) {
     if (!led) return;
     if (led->state) {
-        gpio_bits_set(led->gpio, led->pin);
+      LED_SetDisableState(led);
     } else {
-        gpio_bits_reset(led->gpio, led->pin);
+      LED_SetEnableState(led);
     }
-    led->state = !led->state;
 }

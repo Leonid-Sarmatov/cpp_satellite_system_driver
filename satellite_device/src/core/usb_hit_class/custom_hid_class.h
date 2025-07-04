@@ -22,14 +22,6 @@ extern "C" {
 #define USBD_CUSTOM_IN_MAXPACKET_SIZE           0x40
 #define USBD_CUSTOM_OUT_MAXPACKET_SIZE          0x40
 
-/**
-  * @}
-  */
-
-/** @defgroup USB_custom_hid_class_request_code_definition
-  * @{
-  */
-
 typedef struct
 {
   uint8_t g_rxhid_buff[USBD_CUSTOM_OUT_MAXPACKET_SIZE];
@@ -45,25 +37,9 @@ typedef struct
   uint8_t send_state;
 }custom_hid_type;
 
-/**
-  * @}
-  */
-
-/** @defgroup USB_custom_hid_class_exported_functions
-  * @{
-  */
 extern usbd_class_handler custom_hid_class_handler;
 usb_sts_type custom_hid_class_send_report(void *udev, uint8_t *report, uint16_t len);
-/**
-  * @}
-  */
-/**
-  * @}
-  */
 
-/**
-  * @}
-  */
 #ifdef __cplusplus
 }
 #endif

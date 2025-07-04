@@ -121,7 +121,7 @@ ALIGNED_HEAD static uint8_t g_usbd_configuration[USBD_CUSHID_CONFIG_DESC_SIZE] A
   USB_EPT_DESC_INTERRUPT,                /* bmAttributes: endpoint attributes */
   LBYTE(USBD_CUSTOM_OUT_MAXPACKET_SIZE),
   HBYTE(USBD_CUSTOM_OUT_MAXPACKET_SIZE),  /* wMaxPacketSize: maximum packe size this endpoint */
-  CUSHID_BINTERVAL_TIME,                    /* bInterval: interval for polling endpoint for data transfers */
+  CUSHID_BINTERVAL_TIME,                  /* bInterval: interval for polling endpoint for data transfers */
 };
 
 /**
@@ -137,88 +137,76 @@ ALIGNED_HEAD uint8_t g_usbd_custom_hid_report[USBD_CUSHID_SIZ_REPORT_DESC] ALIGN
   0xa1, 0x01,                            /* COLLECTION (Application)       */
   /* 7 */
 
-  /* Led 2 */
+  /* control led report (byte) */
   0x85, HID_REPORT_ID_2,                 /*     REPORT_ID 2                */
-  0x09, 0x02,                            /*     USAGE (LED 2)              */
+  0x09, HID_REPORT_ID_2,                 /*     USAGE (LED)                */
   0x15, 0x00,                            /*     LOGICAL_MINIMUM (0)        */
   0x25, 0x01,                            /*     LOGICAL_MAXIMUM (1)        */
-  0x75, 0x08,                            /*     REPORT_SIZE (8)            */
-  0x95, 0x3F,                            /*     REPORT_COUNT (1)           */
+  0x75, 0x08,                            /*     REPORT_SIZE (8 bits)       */
+  0x95, 0x3F,                            /*     REPORT_COUNT (1 byte)      */
   0xB1, 0x82,                            /*     FEATURE (Data,Var,Abs,Vol) */
 
-  0x85, 0x02,                            /*     REPORT_ID (2)              */
-  0x09, 0x02,                            /*     USAGE (LED 2)              */
+  0x85, HID_REPORT_ID_2,                 /*     REPORT_ID (2)              */
+  0x09, HID_REPORT_ID_2,                 /*     USAGE (LED)                */
   0x91, 0x82,                            /*     OUTPUT (Data,Var,Abs,Vol)  */
   /* 27 */
 
-  /* Led 3 */
+  /* satellite command report (uint32) */
   0x85, HID_REPORT_ID_3,                 /*     REPORT_ID (3)              */
-  0x09, 0x03,                            /*     USAGE (LED 3)              */
+  0x09, HID_REPORT_ID_3,                 /*     USAGE (COMMAND)            */
   0x15, 0x00,                            /*     LOGICAL_MINIMUM (0)        */
-  0x25, 0x01,                            /*     LOGICAL_MAXIMUM (1)        */
-  0x75, 0x08,                            /*     REPORT_SIZE (8)            */
-  0x95, 0x3F,                            /*     REPORT_COUNT (1)           */
+  0x26, 0xFF, 0x00,                      /*     LOGICAL_MAXIMUM (255)      */
+  0x75, 0x08,                            /*     REPORT_SIZE (8 bits)       */
+  0x95, 0x3F,                            /*     REPORT_COUNT (4 bytes = uint32)     */
   0xB1, 0x82,                            /*     FEATURE (Data,Var,Abs,Vol) */
 
-  0x85, 0x03,                            /*     REPORT_ID (3)              */
-  0x09, 0x03,                            /*     USAGE (LED 3)              */
+  0x85, HID_REPORT_ID_3,                 /*     REPORT_ID (3)              */
+  0x09, HID_REPORT_ID_3,                 /*     USAGE (COMMAND)            */
   0x91, 0x82,                            /*     OUTPUT (Data,Var,Abs,Vol)  */
-  /* 47 */
+  /* 48 */
 
-  /* Led 4 */
-  0x85, HID_REPORT_ID_4,                 /*     REPORT_ID 4)               */
-  0x09, 0x04,                            /*     USAGE (LED 4)              */
+  /* two float32 coordinates */
+  0x85, HID_REPORT_ID_4,                 /*     REPORT_ID (4)              */
+  0x09, HID_REPORT_ID_4,                 /*     USAGE (2 float32 coords)   */
   0x15, 0x00,                            /*     LOGICAL_MINIMUM (0)        */
-  0x25, 0x01,                            /*     LOGICAL_MAXIMUM (1)        */
+  0x26, 0xFF, 0x00,                      /*     LOGICAL_MAXIMUM (255)      */
   0x75, 0x08,                            /*     REPORT_SIZE (8)            */
-  0x95, 0x3F,                            /*     REPORT_COUNT (1)           */
+  0x95, 0x3F,                            /*     REPORT_COUNT (8 bytes = 2 float32)  */
   0xB1, 0x82,                            /*     FEATURE (Data,Var,Abs,Vol) */
 
-  0x85, 0x04,                            /*     REPORT_ID (4)              */
-  0x09, 0x04,                            /*     USAGE (LED 4)              */
+  0x85, HID_REPORT_ID_4,                 /*     REPORT_ID (4)              */
+  0x09, HID_REPORT_ID_4,                 /*     USAGE (2 float32 coords)   */
   0x91, 0x82,                            /*     OUTPUT (Data,Var,Abs,Vol)  */
-  /* 67 */
+  /* 69 */
 
-  /* key Push Button */
+  /* two float64 calibration coords */
   0x85, HID_REPORT_ID_5,                 /*     REPORT_ID (5)              */
-  0x09, 0x05,                            /*     USAGE (Push Button)        */
+  0x09, HID_REPORT_ID_5,                 /*     USAGE (2 float32 calibration coords)*/
   0x15, 0x00,                            /*     LOGICAL_MINIMUM (0)        */
-  0x25, 0x01,                            /*     LOGICAL_MAXIMUM (1)        */
-  0x75, 0x01,                            /*     REPORT_SIZE (1)            */
-  0x81, 0x82,                            /*     INPUT (Data,Var,Abs,Vol)   */
-
-  0x09, 0x05,                            /*     USAGE (Push Button)        */
-  0x75, 0x01,                            /*     REPORT_SIZE (1)            */
-  0xb1, 0x82,                            /*     FEATURE (Data,Var,Abs,Vol) */
-
-  0x75, 0x07,                            /*     REPORT_SIZE (7)            */
-  0x81, 0x83,                            /*     INPUT (Cnst,Var,Abs,Vol)   */
-  0x85, 0x05,                            /*     REPORT_ID (5)              */
-
-  0x75, 0x07,                            /*     REPORT_SIZE (7)            */
-  0xb1, 0x83,                            /*     FEATURE (Cnst,Var,Abs,Vol) */
-  /* 95 */
-
-  /* Data OUT */
-  0x85, HID_REPORT_ID_6,                 /*     REPORT_ID (0xF0)           */
-  0x09, 0x06,                            /*     USAGE                      */
-  0x15, 0x00,                            /*     LOGICAL_MINIMUM (0)        */
-  0x26, 0xFF,0x00,                       /*     LOGICAL_MAXIMUM (255)      */
+  0x26, 0xFF, 0x00,                      /*     LOGICAL_MAXIMUM (255)      */
   0x75, 0x08,                            /*     REPORT_SIZE (8)            */
-  0x95, 0x3F,                            /*     REPORT_COUNT (64)          */
-  0x91, 0x02,                            /*     OUTPUT(Data,Var,Abs,Vol)   */
-  /* 110 */
+  0x95, 0x3F,                            /*     REPORT_COUNT (8 bytes = 2 float32)  */
+  0xB1, 0x82,                            /*     FEATURE (Data,Var,Abs,Vol) */
 
-  /* Data IN */
-  0x85, HID_REPORT_ID_6,                 /*     REPORT_ID (0xF0)           */
-  0x09, 0x07,                            /*     USAGE                      */
+  0x85, HID_REPORT_ID_5,                 /*     REPORT_ID (5)              */
+  0x09, HID_REPORT_ID_5,                 /*     USAGE (2 float32 calibration coords)*/
+  0x91, 0x82,                            /*     OUTPUT (Data,Var,Abs,Vol)  */
+  /* 90 */
+
+  /* calibration UNIX-time (uint32) */
+  0x85, HID_REPORT_ID_6,                 /*     REPORT_ID (6)              */
+  0x09, HID_REPORT_ID_6,                 /*     USAGE (time calibration)   */
   0x15, 0x00,                            /*     LOGICAL_MINIMUM (0)        */
-  0x26, 0xFF,0x00,                       /*     LOGICAL_MAXIMUM (255)      */
-  0x75, 0x08,                            /*     REPORT_SIZE (8)            */
-  0x95, 0x3F,                            /*     REPORT_COUNT (64)          */
-  0x81, 0x82,                            /*     INPUT(Data,Var,Abs,Vol)    */
+  0x26, 0xFF, 0x00,                      /*     LOGICAL_MAXIMUM (255)      */
+  0x75, 0x08,                            /*     REPORT_SIZE (8 bits)       */
+  0x95, 0x3F,                            /*     REPORT_COUNT (4 bytes = uint32)     */
+  0xB1, 0x82,                            /*     FEATURE (Data,Var,Abs,Vol) */
+
+  0x85, HID_REPORT_ID_6,                 /*     REPORT_ID (6)              */
+  0x09, HID_REPORT_ID_6,                 /*     USAGE (time calibration)   */
+  0x91, 0x82,                            /*     OUTPUT (Data,Var,Abs,Vol)  */
+  /* 111 */
   
-  /* 125 */
   0xc0                                   /*     END_COLLECTION             */
 };
 

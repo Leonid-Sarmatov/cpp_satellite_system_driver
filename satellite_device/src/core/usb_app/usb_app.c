@@ -6,6 +6,7 @@
 #include "usbd_int.h"
 #include "custom_hid_class.h"
 #include "custom_hid_desc.h"
+#include "controlled_systems.h"
 
 #include "led.h"
 
@@ -45,25 +46,8 @@ void wk_usb_app_init(void) {
   * @param  none
   * @retval none
   */
-void wk_usb_app_task(void)
-{
-  /* fs1 device custom hid */
-  /*
-  after the the usb connected, user can use the 'custom_hid_class_send_report' function
-  to report hid events, for example, to report a char led on/off event as follows:
-  ALIGNED_HEAD static uint8_t report_buf[64] ALIGNED_TAIL;
-  if(usbd_connect_state_get(&otg_core_struct_fs1.dev) == USB_CONN_STATE_CONFIGURED)
-  {
-    report_buf[0] = HID_REPORT_ID_5;
-    report_buf[1] = 0;
-    custom_hid_class_send_report(&otg_core_struct_fs1.dev, report_buf, 64);
-    usb_delay_ms(100);
-    report_buf[0] = HID_REPORT_ID_5;
-    report_buf[1] = 1;
-    custom_hid_class_send_report(&otg_core_struct_fs1.dev, report_buf, 64);
-    usb_delay_ms(100);
-  }
-  */
+void wk_usb_app_task(void) {
+
 }
 
 /**

@@ -71,24 +71,24 @@ int main(void)
   /* init acc function. */
   wk_acc_init();
 
+  /* init equipment function. */
+  satelliteEquipmentInit();
+
   /* init usb_otgfs1 function. */
   wk_usb_otgfs1_init();
 
   /* init usb app function. */
   wk_usb_app_init();
 
-  /* init equipment function. */
-  satelliteEquipmentInit();
-
   while(1)
   {
-    //wk_usb_app_task();
+    wk_usb_app_task();
 
-    //gpio_bits_reset(LED_GPIO_PORT, LED_PIN);
-    //LED_ReverseState(&myLed);
-    //wk_delay_ms(1000);
-    //gpio_bits_set(LED_GPIO_PORT, LED_PIN);
-    //LED_ReverseState(&myLed);
-    //wk_delay_ms(1000);
+    // gpio_bits_reset(LED_GPIO_PORT, LED_PIN);
+    // //LED_ReverseState(&myLed);
+    // wk_delay_ms(1000);
+    // gpio_bits_set(LED_GPIO_PORT, LED_PIN);
+    // //LED_ReverseState(&myLed);
+    // wk_delay_ms(1000);
   }
 }
