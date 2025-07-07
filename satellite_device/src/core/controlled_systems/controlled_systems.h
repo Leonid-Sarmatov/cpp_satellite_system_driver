@@ -12,9 +12,10 @@ extern "C" {
 /**
   * @brief LED for monitoring and prevention
   */
-extern led_t controlLed;
+extern uint8_t ledBlinkFlag;
 
 void satelliteEquipmentInit(void);
+void controlLedInit();
 
 #ifdef __cplusplus
 }

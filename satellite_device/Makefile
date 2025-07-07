@@ -70,6 +70,15 @@ libraries/middlewares/usb_drivers/src/usb_core.c \
 libraries/middlewares/usb_drivers/src/usbd_core.c \
 libraries/middlewares/usb_drivers/src/usbd_int.c \
 libraries/middlewares/usb_drivers/src/usbd_sdr.c \
+libraries/middlewares/freertos/source/croutine.c \
+libraries/middlewares/freertos/source/event_groups.c \
+libraries/middlewares/freertos/source/list.c \
+libraries/middlewares/freertos/source/queue.c \
+libraries/middlewares/freertos/source/stream_buffer.c \
+libraries/middlewares/freertos/source/tasks.c \
+libraries/middlewares/freertos/source/timers.c \
+libraries/middlewares/freertos/source/portable/GCC/ARM_CM4F/port.c \
+libraries/middlewares/freertos/source/portable/memmang/heap_4.c \
 
 # ASM sources
 ASM_SOURCES = \
@@ -133,6 +142,8 @@ C_INCLUDES = \
 -Ilibraries/cmsis/cm4/core_support \
 -Ilibraries/cmsis/cm4/device_support \
 -Ilibraries/middlewares/usb_drivers/inc \
+-Ilibraries/middlewares/freertos/source/include \
+-Ilibraries/middlewares/freertos/source/portable/GCC/ARM_CM4F \
 -Isrc/conf \
 -Isrc/conf/clock_nvic_perif_initialization \
 -Isrc/conf/interrupts_handlers \
@@ -187,21 +198,28 @@ vpath %.S $(sort $(dir $(ASMM_SOURCES)))
 
 $(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR) 
 	$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
+	@echo
 
 $(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
 	$(AS) -c $(CFLAGS) $< -o $@
+	@echo
 $(BUILD_DIR)/%.o: %.S Makefile | $(BUILD_DIR)
 	$(AS) -c $(CFLAGS) $< -o $@
+	@echo
 
 $(BUILD_DIR)/$(TARGET).elf: $(OBJECTS) Makefile
 	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
+	@echo
 	$(SZ) $@
+	@echo
 
 $(BUILD_DIR)/%.hex: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
 	$(HEX) $< $@
+	@echo
 	
 $(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
-	$(BIN) $< $@	
+	$(BIN) $< $@
+	@echo
 	
 $(BUILD_DIR):
 	mkdir $@		

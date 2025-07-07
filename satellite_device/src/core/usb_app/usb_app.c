@@ -8,7 +8,11 @@
 #include "custom_hid_desc.h"
 #include "controlled_systems.h"
 
+#include "FreeRTOS.h"
+#include "task.h"
+
 #include "led.h"
+#include "controlled_systems.h"
 
 /* private includes ----------------------------------------------------------*/
 
@@ -25,29 +29,50 @@
   */
 static otg_core_type otg_core_struct_fs1;
 
+/**
+  * @brief FreeRTOS task descriptor
+  */
+static TaskHandle_t usbTaskHandler;
+
 /* private function prototypes --------------------------------------------*/
+
+void usbAppTask(void *pvParameters);
 
 /**
   * @brief  usb application initialization
   * @param  none
   * @retval none
   */
-void wk_usb_app_init(void) {
+void usbAppInit(void) {
+  /* FreeRTOS task create */
+  taskENTER_CRITICAL();
+
+  xTaskCreate((TaskFunction_t )usbAppTask,
+              (const char*    )"USB_task",
+              (uint16_t       )1024,
+              (void*          )NULL,
+              (UBaseType_t    )0,
+              (TaskHandle_t*  )&usbTaskHandler);
+  
+  taskEXIT_CRITICAL();
+}
+
+/**
+  * @brief  FreeRTOS task 
+  * @param  pvParameters
+  * @retval none
+  */
+void usbAppTask(void *pvParameters) {
   /*fs1 device custom hid */
   usbd_init(&otg_core_struct_fs1,
             USB_FULL_SPEED_CORE_ID,
             USB_OTG1_ID,
             &custom_hid_class_handler,
             &custom_hid_desc_handler);
-}
 
-/**
-  * @brief  usb application task
-  * @param  none
-  * @retval none
-  */
-void wk_usb_app_task(void) {
-
+  while (1) {
+    vTaskDelay(pdMS_TO_TICKS(200));
+  }
 }
 
 /**

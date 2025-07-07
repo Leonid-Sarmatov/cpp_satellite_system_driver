@@ -139,15 +139,17 @@ static int satellite_probe(struct usb_interface *interface,
     dev_info(&interface->dev, "Satellite device connected\n");
 
     // Мигаем светодиодом 5 раз
-    {
-        int k;
-        for (k = 0; k < 5; k++) {
-            send_led_command(dev, 0); // Вкл
-            msleep(100);
-            send_led_command(dev, 1); // Выкл
-            msleep(100);
-        }
-    }
+    // {
+    //     int k;
+    //     for (k = 0; k < 5; k++) {
+    //         send_led_command(dev, 0); // Вкл
+    //         msleep(100);
+    //         send_led_command(dev, 1); // Выкл
+    //         msleep(100);
+    //     }
+    // }
+    send_led_command(dev, 0);
+    msleep(100);
 
     return 0;
 }

@@ -36,24 +36,12 @@ extern "C" {
 #include "at32f435_437.h"
 
 /* private includes ----------------------------------------------------------*/
-/* add user code begin private includes */
-
-/* add user code end private includes */
 
 /* exported types ------------------------------------------------------------*/
-/* add user code begin exported types */
-
-/* add user code end exported types */
 
 /* exported constants --------------------------------------------------------*/
-/* add user code begin exported constants */
-
-/* add user code end exported constants */
 
 /* exported macro ------------------------------------------------------------*/
-/* add user code begin exported macro */
-
-/* add user code end exported macro */
 
 /* exported functions ------------------------------------------------------- */
 void NMI_Handler(void);

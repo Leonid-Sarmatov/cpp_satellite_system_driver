@@ -32,6 +32,8 @@
 #include "wk_system.h"
 //#include "led.h"
 #include "controlled_systems.h"
+#include "FreeRTOS.h"
+#include "task.h"
 
 /* private includes ----------------------------------------------------------*/
 
@@ -43,11 +45,47 @@
 
 /* private variables ---------------------------------------------------------*/
 
-led_t myLed;
+// TaskHandle_t controlLedTaskHandler;
+// TaskHandle_t usbTaskHandler;
 
 /* private function prototypes --------------------------------------------*/
 
+// void test_task(void *pvParameters);
+// void usb_task(void *pvParameters);
+
 /* private user code ---------------------------------------------------------*/
+/* Idle task control block and stack */
+// static StackType_t idle_task_stack[configMINIMAL_STACK_SIZE];
+// static StackType_t timer_task_stack[configTIMER_TASK_STACK_DEPTH];
+
+// static StaticTask_t idle_task_tcb;
+// static StaticTask_t timer_task_tcb;
+
+// /* External Idle and Timer task static memory allocation functions */
+// extern void vApplicationGetIdleTaskMemory( StaticTask_t ** ppxIdleTaskTCBBuffer, StackType_t ** ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
+// extern void vApplicationGetTimerTaskMemory( StaticTask_t ** ppxTimerTaskTCBBuffer, StackType_t ** ppxTimerTaskStackBuffer, uint32_t * pulTimerTaskStackSize );
+
+// /*
+//   vApplicationGetIdleTaskMemory gets called when configSUPPORT_STATIC_ALLOCATION
+//   equals to 1 and is required for static memory allocation support.
+// */
+// void vApplicationGetIdleTaskMemory( StaticTask_t ** ppxIdleTaskTCBBuffer, StackType_t ** ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize )
+// {
+//   *ppxIdleTaskTCBBuffer = &idle_task_tcb;
+//   *ppxIdleTaskStackBuffer = &idle_task_stack[0];
+//   *pulIdleTaskStackSize = (uint32_t)configMINIMAL_STACK_SIZE;
+// }
+// /*
+//   vApplicationGetTimerTaskMemory gets called when configSUPPORT_STATIC_ALLOCATION
+//   equals to 1 and is required for static memory allocation support.
+// */
+// void vApplicationGetTimerTaskMemory( StaticTask_t ** ppxTimerTaskTCBBuffer, StackType_t ** ppxTimerTaskStackBuffer, uint32_t * pulTimerTaskStackSize )
+// {
+//   *ppxTimerTaskTCBBuffer = &timer_task_tcb;
+//   *ppxTimerTaskStackBuffer = &timer_task_stack[0];
+//   *pulTimerTaskStackSize = (uint32_t)configTIMER_TASK_STACK_DEPTH;
+// }
+
 
 /**
   * @brief main function.
@@ -71,18 +109,37 @@ int main(void)
   /* init acc function. */
   wk_acc_init();
 
-  /* init equipment function. */
-  satelliteEquipmentInit();
-
   /* init usb_otgfs1 function. */
   wk_usb_otgfs1_init();
 
+  /* init equipment function. */
+  satelliteEquipmentInit();
+
   /* init usb app function. */
-  wk_usb_app_init();
+  //wk_usb_app_init();
+  usbAppInit();
+
+  /* start control led FreeRTOS task */
+  // xTaskCreate((TaskFunction_t )test_task,
+  //             (const char*    )"LED_test_task",
+  //             (uint16_t       )512,
+  //             (void*          )NULL,
+  //             (UBaseType_t    )2,
+  //             (TaskHandle_t*  )&controlLedTaskHandler);
+
+  // xTaskCreate((TaskFunction_t )usb_task,
+  //             (const char*    )"USB_test_task",
+  //             (uint16_t       )2048,
+  //             (void*          )NULL,
+  //             (UBaseType_t    )2,
+  //             (TaskHandle_t*  )&usbTaskHandler);
+
+  /* start scheduler */
+  vTaskStartScheduler();
 
   while(1)
   {
-    wk_usb_app_task();
+    //wk_usb_app_task();
 
     // gpio_bits_reset(LED_GPIO_PORT, LED_PIN);
     // //LED_ReverseState(&myLed);
@@ -92,3 +149,17 @@ int main(void)
     // wk_delay_ms(1000);
   }
 }
+
+// void test_task(void *pvParameters) {
+//   while (1) {
+//     gpio_bits_reset(LED_GPIO_PORT, LED_PIN);
+//     vTaskDelay(pdMS_TO_TICKS(1000));
+//     gpio_bits_set(LED_GPIO_PORT, LED_PIN);
+//     vTaskDelay(pdMS_TO_TICKS(1000));
+//   }
+// }
+
+// void usb_task(void *pvParameters) {
+//   wk_usb_app_init();
+//   while (1) {}
+// }

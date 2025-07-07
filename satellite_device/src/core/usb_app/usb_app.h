@@ -24,7 +24,7 @@ extern "C" {
   * @param  none
   * @retval none
   */
-void wk_usb_app_init(void);
+void usbAppInit(void);
 
 /**
   * @brief  usb application task

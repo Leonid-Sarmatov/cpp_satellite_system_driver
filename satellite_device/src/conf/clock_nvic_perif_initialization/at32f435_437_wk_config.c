@@ -27,39 +27,18 @@
 #include "at32f435_437_wk_config.h"
 
 /* private includes ----------------------------------------------------------*/
-/* add user code begin private includes */
-
-/* add user code end private includes */
 
 /* private typedef -----------------------------------------------------------*/
-/* add user code begin private typedef */
-
-/* add user code end private typedef */
 
 /* private define ------------------------------------------------------------*/
-/* add user code begin private define */
-
-/* add user code end private define */
 
 /* private macro -------------------------------------------------------------*/
-/* add user code begin private macro */
-
-/* add user code end private macro */
 
 /* private variables ---------------------------------------------------------*/
-/* add user code begin private variables */
-
-/* add user code end private variables */
 
 /* private function prototypes --------------------------------------------*/
-/* add user code begin function prototypes */
-
-/* add user code end function prototypes */
 
 /* private user code ---------------------------------------------------------*/
-/* add user code begin 0 */
-
-/* add user code end 0 */
 
 /**
   * @brief  system clock config program
@@ -203,12 +182,8 @@ void wk_nvic_config(void)
   NVIC_SetPriority(UsageFault_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
   NVIC_SetPriority(SVCall_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
   NVIC_SetPriority(DebugMonitor_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
-  NVIC_SetPriority(PendSV_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
+  NVIC_SetPriority(PendSV_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 15, 0));
   NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 15, 0));
-  nvic_irq_enable(OTGFS1_WKUP_IRQn, 0, 0);
-  nvic_irq_enable(OTGFS1_IRQn, 0, 0);
+  //nvic_irq_enable(OTGFS1_WKUP_IRQn, 15, 0);
+  nvic_irq_enable(OTGFS1_IRQn, 5, 0);
 }
-
-/* add user code begin 1 */
-
-/* add user code end 1 */

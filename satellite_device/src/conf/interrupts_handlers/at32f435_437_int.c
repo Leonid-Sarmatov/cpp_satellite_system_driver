@@ -27,45 +27,22 @@
 /* includes ------------------------------------------------------------------*/
 #include "at32f435_437_int.h"
 #include "usb_app.h"
+#include "wk_system.h"
 /* private includes ----------------------------------------------------------*/
-/* add user code begin private includes */
-
-/* add user code end private includes */
 
 /* private typedef -----------------------------------------------------------*/
-/* add user code begin private typedef */
-
-/* add user code end private typedef */
 
 /* private define ------------------------------------------------------------*/
-/* add user code begin private define */
-
-/* add user code end private define */
 
 /* private macro -------------------------------------------------------------*/
-/* add user code begin private macro */
-
-/* add user code end private macro */
 
 /* private variables ---------------------------------------------------------*/
-/* add user code begin private variables */
-
-/* add user code end private variables */
 
 /* private function prototypes --------------------------------------------*/
-/* add user code begin function prototypes */
-
-/* add user code end function prototypes */
 
 /* private user code ---------------------------------------------------------*/
-/* add user code begin 0 */
-
-/* add user code end 0 */
 
 /* external variables ---------------------------------------------------------*/
-/* add user code begin external variables */
-
-/* add user code end external variables */
 
 /**
   * @brief  this function handles nmi exception.
@@ -74,13 +51,6 @@
   */
 void NMI_Handler(void)
 {
-  /* add user code begin NonMaskableInt_IRQ 0 */
-
-  /* add user code end NonMaskableInt_IRQ 0 */
-
-  /* add user code begin NonMaskableInt_IRQ 1 */
-
-  /* add user code end NonMaskableInt_IRQ 1 */
 }
 
 /**
@@ -90,15 +60,9 @@ void NMI_Handler(void)
   */
 void HardFault_Handler(void)
 {
-  /* add user code begin HardFault_IRQ 0 */
-
-  /* add user code end HardFault_IRQ 0 */
   /* go to infinite loop when hard fault exception occurs */
   while (1)
   {
-    /* add user code begin W1_HardFault_IRQ 0 */
-
-    /* add user code end W1_HardFault_IRQ 0 */
   }
 }
 
@@ -109,15 +73,9 @@ void HardFault_Handler(void)
   */
 void MemManage_Handler(void)
 {
-  /* add user code begin MemoryManagement_IRQ 0 */
-
-  /* add user code end MemoryManagement_IRQ 0 */
   /* go to infinite loop when memory manage exception occurs */
   while (1)
   {
-    /* add user code begin W1_MemoryManagement_IRQ 0 */
-
-    /* add user code end W1_MemoryManagement_IRQ 0 */
   }
 }
 
@@ -152,9 +110,9 @@ void UsageFault_Handler(void)
   * @param  none
   * @retval none
   */
-void SVC_Handler(void)
-{
-}
+// void SVC_Handler(void)
+// {
+// }
 
 /**
   * @brief  this function handles debug monitor exception.
@@ -170,9 +128,11 @@ void DebugMon_Handler(void)
   * @param  none
   * @retval none
   */
-void PendSV_Handler(void)
-{
-}
+// void PendSV_Handler(void)
+// {
+// }
+
+extern void xPortSysTickHandler(void);
 
 /**
   * @brief  this function handles systick handler.
@@ -181,6 +141,16 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
+  wk_timebase_handler();
+
+#if (INCLUDE_xTaskGetSchedulerState == 1 )
+  if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED)
+  {
+#endif /* INCLUDE_xTaskGetSchedulerState */
+  xPortSysTickHandler();
+#if (INCLUDE_xTaskGetSchedulerState == 1 )
+  }
+#endif /* INCLUDE_xTaskGetSchedulerState */
 }
 
 /**
@@ -201,7 +171,3 @@ void OTGFS1_IRQHandler(void)
 {
   wk_otgfs1_irq_handler();
 }
-
-/* add user code begin 1 */
-
-/* add user code end 1 */

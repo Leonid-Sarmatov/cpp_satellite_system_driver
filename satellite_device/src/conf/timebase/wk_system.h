@@ -32,8 +32,8 @@ extern "C" {
 #include "at32f435_437.h"
 
 void wk_timebase_init(void);
-void wk_delay_us(uint32_t delay);
 void wk_delay_ms(uint32_t delay);
+void wk_timebase_handler(void);
 
 #ifdef __cplusplus
 }

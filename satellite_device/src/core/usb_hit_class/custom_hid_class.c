@@ -331,11 +331,13 @@ static void usb_hid_buf_process(void *udev, uint8_t *report, uint16_t len)
     case HID_REPORT_ID_2:
       if(report[1] == 0)
       {
-        LED_SetDisableState(&controlLed);
+        //LED_SetDisableState(&controlLed);
+        ledBlinkFlag = 0;
       }
       else
       {
-        LED_SetEnableState(&controlLed);
+        //LED_SetEnableState(&controlLed);
+        ledBlinkFlag = 1;
       }
 
       ALIGNED_HEAD static uint8_t report_buf[64] ALIGNED_TAIL;
