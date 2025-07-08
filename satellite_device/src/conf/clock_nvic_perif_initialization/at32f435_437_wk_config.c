@@ -166,6 +166,9 @@ void wk_periph_clock_config(void)
 
   /* enable acc periph clock */
   crm_periph_clock_enable(CRM_ACC_PERIPH_CLOCK, TRUE);
+
+  /* enable usart1 periph clock */
+  crm_periph_clock_enable(CRM_USART1_PERIPH_CLOCK, TRUE);
 }
 
 /**
@@ -186,4 +189,5 @@ void wk_nvic_config(void)
   NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 15, 0));
   //nvic_irq_enable(OTGFS1_WKUP_IRQn, 15, 0);
   nvic_irq_enable(OTGFS1_IRQn, 5, 0);
+  //nvic_irq_enable(USART1_IRQn, 5, 0);
 }

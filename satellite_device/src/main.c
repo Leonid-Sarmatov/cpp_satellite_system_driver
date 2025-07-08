@@ -30,7 +30,7 @@
 #include "wk_usb_otgfs.h"
 #include "usb_app.h"
 #include "wk_system.h"
-//#include "led.h"
+#include "usart_debug.h"
 #include "controlled_systems.h"
 #include "FreeRTOS.h"
 #include "task.h"
@@ -111,6 +111,9 @@ int main(void)
 
   /* init usb_otgfs1 function. */
   wk_usb_otgfs1_init();
+
+  /* init usart function. */
+  usartDebugInit();
 
   /* init equipment function. */
   satelliteEquipmentInit();

@@ -13,6 +13,7 @@
 
 #include "led.h"
 #include "controlled_systems.h"
+#include "usart_debug.h"
 
 /* private includes ----------------------------------------------------------*/
 
@@ -63,12 +64,18 @@ void usbAppInit(void) {
   * @retval none
   */
 void usbAppTask(void *pvParameters) {
+  vTaskDelay(pdMS_TO_TICKS(5000));
+  //usartDebugInit();
+
   /*fs1 device custom hid */
   usbd_init(&otg_core_struct_fs1,
             USB_FULL_SPEED_CORE_ID,
             USB_OTG1_ID,
             &custom_hid_class_handler,
             &custom_hid_desc_handler);
+  
+  vTaskDelay(pdMS_TO_TICKS(5000));
+  //usartDebugInit();
 
   while (1) {
     vTaskDelay(pdMS_TO_TICKS(200));

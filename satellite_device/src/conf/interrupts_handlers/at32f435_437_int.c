@@ -171,3 +171,13 @@ void OTGFS1_IRQHandler(void)
 {
   wk_otgfs1_irq_handler();
 }
+
+/**
+  * @brief  this function handles USART1 handler.
+  * @param  none
+  * @retval none
+  */
+void USART1_IRQHandler(void) 
+{
+
+}

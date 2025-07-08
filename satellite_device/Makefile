@@ -33,6 +33,7 @@ src/drivers/wk_acc.c \
 src/drivers/wk_usb_otgfs.c \
 src/drivers/led.c \
 src/drivers/button.c \
+src/drivers/usart_debug.c \
 src/core/usb_app/usb_app.c \
 src/core/usb_descriptor/custom_hid_desc.c \
 src/core/usb_hit_class/custom_hid_class.c \

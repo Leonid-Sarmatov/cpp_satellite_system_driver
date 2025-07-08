@@ -69,6 +69,11 @@ void vControlLedTask(void *pvParameters) {
     if (ledBlinkFlag == 1) {
       LED_ReverseState(&controlLed);
     }
+
+    taskENTER_CRITICAL();
+    printf("led blink task, count = %lu\r\n", xTaskGetTickCount());
+    taskEXIT_CRITICAL();
+
     vTaskDelay(pdMS_TO_TICKS(200));
   }
 }
