@@ -3,10 +3,14 @@ obj-m += satellite.o
 # Перечисляем ВСЕ исходные файлы модуля     echo_satellite.o
 satellite-y := \
 	satellite_main.o \
-    config/config.o
+    probe_disconnect/probe_disconnect.o \
+	files_operations/files_operations.o
 
 # Пути к заголовкам
-ccflags-y := -I$(src)/config
+ccflags-y := \
+	-I$(src) \
+	-I$(src)/probe_disconnect \
+	-I$(src)/files_operations
 
 # Директория для временных файлов
 BUILD_DIR := build
